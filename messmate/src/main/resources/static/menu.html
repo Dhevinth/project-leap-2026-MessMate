@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MessMate | Weekly Menu</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+
+        <div class="logo-box">
+            M
+        </div>
+
+        <div>
+
+            <h2>
+                MessMate
+            </h2>
+
+            <span>
+                HOSTEL MESS MANAGEMENT
+            </span>
+
+        </div>
+
+    </a>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="index.html#today">
+            Today's Menu
+        </a>
+
+        <a href="menu.html" class="active">
+            Weekly Menu
+        </a>
+
+        <a href="feedback.html">
+            Feedback
+        </a>
+
+        <a href="reports.html">
+            Reports
+        </a>
+
+    </nav>
+
+
+    <a href="residents.html"
+       class="resident-btn">
+
+        Residents
+
+    </a>
+
+</header>
+
+
+
+<!-- =====================================================
+     PAGE HEADER
+===================================================== -->
+
+<section class="page-header">
+
+    <div>
+
+        <span class="small-title">
+            PLAN YOUR MEALS
+        </span>
+
+        <h1>
+            Weekly Menu
+        </h1>
+
+        <p>
+            Explore the complete meal schedule for the week
+            and see what's being served each day.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     WEEK SELECTOR
+===================================================== -->
+
+<section class="week-selector">
+
+    <button
+            class="week-btn"
+            onclick="changeWeek(-1)">
+
+        ← Previous Week
+
+    </button>
+
+
+    <div class="week-current">
+
+        <span>
+            WEEK
+        </span>
+
+        <strong id="weekLabel">
+            Loading...
+        </strong>
+
+    </div>
+
+
+    <button
+            class="week-btn"
+            onclick="changeWeek(1)">
+
+        Next Week →
+
+    </button>
+
+</section>
+
+
+
+<!-- =====================================================
+     WEEKLY MENU
+===================================================== -->
+
+<section class="section weekly-section">
+
+    <div id="weeklyMenu">
+
+        <div class="loading">
+            Loading weekly menu...
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-left">
+
+        <div class="logo-box">
+            M
+        </div>
+
+        <div>
+
+            <strong>
+                MessMate
+            </strong>
+
+            <span>
+                Making hostel meals better.
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-center">
+
+        Hostel Mess Management System
+
+    </div>
+
+
+    <div class="footer-right">
+
+        © 2026 MessMate
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+    const API = "/api";
+
+    let currentWeekStart = getMonday(new Date());
+
+
+
+    /* =====================================================
+       GET MONDAY
+    ===================================================== */
+
+    function getMonday(date) {
+
+        const d = new Date(date);
+
+        const day = d.getDay();
+
+        const difference =
+            day === 0 ? -6 : 1 - day;
+
+        d.setDate(
+            d.getDate() + difference
+        );
+
+        d.setHours(0, 0, 0, 0);
+
+        return d;
+    }
+
+
+
+    /* =====================================================
+       FORMAT DATE
+    ===================================================== */
+
+    function formatDate(date) {
+
+        const year =
+            date.getFullYear();
+
+        const month =
+            String(date.getMonth() + 1)
+                .padStart(2, "0");
+
+        const day =
+            String(date.getDate())
+                .padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+    }
+
+
+
+    /* =====================================================
+       DISPLAY DATE
+    ===================================================== */
+
+    function displayDate(date) {
+
+        return date.toLocaleDateString(
+            "en-IN",
+            {
+                day: "numeric",
+                month: "short",
+                year: "numeric"
+            }
+        );
+
+    }
+
+
+
+    /* =====================================================
+       UPDATE WEEK LABEL
+    ===================================================== */
+
+    function updateWeekLabel() {
+
+        const monday =
+            new Date(currentWeekStart);
+
+        const sunday =
+            new Date(currentWeekStart);
+
+        sunday.setDate(
+            sunday.getDate() + 6
+        );
+
+
+        document.getElementById("weekLabel")
+            .textContent =
+            displayDate(monday)
+            + " — "
+            + displayDate(sunday);
+
+    }
+
+
+
+    /* =====================================================
+       CHANGE WEEK
+    ===================================================== */
+
+    function changeWeek(direction) {
+
+        currentWeekStart.setDate(
+            currentWeekStart.getDate()
+            + (direction * 7)
+        );
+
+        loadWeeklyMenu();
+
+    }
+
+
+
+    /* =====================================================
+       LOAD WEEKLY MENU
+    ===================================================== */
+
+    async function loadWeeklyMenu() {
+
+        const container =
+            document.getElementById("weeklyMenu");
+
+        updateWeekLabel();
+
+
+        const from =
+            formatDate(currentWeekStart);
+
+
+        const toDate =
+            new Date(currentWeekStart);
+
+        toDate.setDate(
+            toDate.getDate() + 6
+        );
+
+
+        const to =
+            formatDate(toDate);
+
+
+        container.innerHTML = `
+        <div class="loading">
+            Loading weekly menu...
+        </div>
+    `;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    API +
+                    "/meals?from=" +
+                    from +
+                    "&to=" +
+                    to
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load menu"
+                );
+
+            }
+
+
+            const meals =
+                await response.json();
+
+
+            if (!meals.length) {
+
+                container.innerHTML = `
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        🍽️
+                    </div>
+
+                    <h3>
+                        No meals scheduled
+                    </h3>
+
+                    <p>
+                        There are no meals available
+                        for this week.
+                    </p>
+
+                </div>
+            `;
+
+                return;
+
+            }
+
+
+            renderWeeklyMenu(
+                meals,
+                container
+            );
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            container.innerHTML = `
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Unable to load menu
+                </h3>
+
+                <p>
+                    Please make sure the
+                    Spring Boot server is running.
+                </p>
+
+                <button
+                    class="button primary"
+                    onclick="loadWeeklyMenu()">
+
+                    Try Again
+
+                </button>
+
+            </div>
+        `;
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       RENDER WEEKLY MENU
+    ===================================================== */
+
+    function renderWeeklyMenu(
+        meals,
+        container
+    ) {
+
+        container.innerHTML = "";
+
+
+        const grouped =
+            groupMealsByDate(meals);
+
+
+        for (
+            let i = 0;
+            i < 7;
+            i++
+        ) {
+
+            const date =
+                new Date(currentWeekStart);
+
+
+            date.setDate(
+                date.getDate() + i
+            );
+
+
+            const dateString =
+                formatDate(date);
+
+
+            const dayMeals =
+                grouped[dateString] || [];
+
+
+            const dayCard =
+                document.createElement("div");
+
+
+            dayCard.className =
+                "day-card";
+
+
+            if (
+                formatDate(new Date())
+                === dateString
+            ) {
+
+                dayCard.classList.add(
+                    "today-card-highlight"
+                );
+
+            }
+
+
+            dayCard.innerHTML = `
+
+            <div class="day-header">
+
+                <div>
+
+                    <span class="day-name">
+                        ${date.toLocaleDateString(
+                "en-IN",
+                {
+                    weekday: "long"
+                }
+            )}
+                    </span>
+
+                    <h3>
+                        ${date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "numeric",
+                    month: "long"
+                }
+            )}
+                    </h3>
+
+                </div>
+
+                ${
+                formatDate(new Date())
+                === dateString
+
+                    ? `
+                        <span class="today-badge">
+                            TODAY
+                        </span>
+                    `
+                    : ""
+            }
+
+            </div>
+
+
+            <div class="day-meals">
+
+                ${
+                dayMeals.length
+                    ? dayMeals.map(
+                        createMealHTML
+                    ).join("")
+                    : `
+                        <div class="no-meal">
+                            No meal scheduled
+                        </div>
+                    `
+            }
+
+            </div>
+
+        `;
+
+
+            container.appendChild(
+                dayCard
+            );
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       GROUP MEALS BY DATE
+    ===================================================== */
+
+    function groupMealsByDate(meals) {
+
+        const grouped = {};
+
+
+        meals.forEach(meal => {
+
+            if (!grouped[meal.mealDate]) {
+
+                grouped[meal.mealDate] = [];
+
+            }
+
+
+            grouped[
+                meal.mealDate
+                ].push(meal);
+
+        });
+
+
+        return grouped;
+
+    }
+
+
+
+    /* =====================================================
+       CREATE MEAL HTML
+    ===================================================== */
+
+    function createMealHTML(meal) {
+
+        const type =
+            meal.mealType
+                ? meal.mealType.toLowerCase()
+                : "meal";
+
+
+        let icon = "🍽️";
+
+
+        if (type === "breakfast") {
+
+            icon = "🌅";
+
+        }
+
+        else if (type === "lunch") {
+
+            icon = "☀️";
+
+        }
+
+        else if (type === "dinner") {
+
+            icon = "🌙";
+
+        }
+
+
+        const items =
+            meal.menuItems || [];
+
+
+        const menuHTML =
+            items.length
+
+                ? items.map(
+                    item => `
+                <span class="menu-tag">
+                    ${escapeHTML(item.name)}
+                </span>
+            `
+                ).join("")
+
+                : `
+            <span class="menu-empty">
+                Menu not specified
+            </span>
+        `;
+
+
+        return `
+
+        <div class="meal-card">
+
+            <div class="meal-icon">
+                ${icon}
+            </div>
+
+
+            <div class="meal-information">
+
+                <div class="meal-title-row">
+
+                    <h4>
+                        ${capitalize(type)}
+                    </h4>
+
+                    <span class="meal-time">
+                        ${getMealTime(type)}
+                    </span>
+
+                </div>
+
+
+                <div class="menu-items">
+
+                    ${menuHTML}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+    }
+
+
+
+    /* =====================================================
+       MEAL TIME
+    ===================================================== */
+
+    function getMealTime(type) {
+
+        if (type === "breakfast") {
+
+            return "08:00 AM";
+
+        }
+
+
+        if (type === "lunch") {
+
+            return "01:00 PM";
+
+        }
+
+
+        if (type === "dinner") {
+
+            return "08:00 PM";
+
+        }
+
+
+        return "";
+
+    }
+
+
+
+    /* =====================================================
+       CAPITALIZE
+    ===================================================== */
+
+    function capitalize(text) {
+
+        return text.charAt(0).toUpperCase()
+            + text.slice(1);
+
+    }
+
+
+
+    /* =====================================================
+       HTML ESCAPE
+    ===================================================== */
+
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            text ?? "";
+
+        return div.innerHTML;
+
+    }
+
+
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+    loadWeeklyMenu();
+
+</script>
+
+
+</body>
+
+</html>

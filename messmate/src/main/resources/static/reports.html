@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MessMate | Reports</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+
+        <div class="logo-box">
+            M
+        </div>
+
+        <div>
+
+            <h2>
+                MessMate
+            </h2>
+
+            <span>
+                HOSTEL MESS MANAGEMENT
+            </span>
+
+        </div>
+
+    </a>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="index.html#today">
+            Today's Menu
+        </a>
+
+        <a href="menu.html">
+            Weekly Menu
+        </a>
+
+        <a href="feedback.html">
+            Feedback
+        </a>
+
+        <a href="reports.html" class="active">
+            Reports
+        </a>
+
+    </nav>
+
+
+    <a href="residents.html"
+       class="resident-btn">
+
+        Residents
+
+    </a>
+
+</header>
+
+
+
+<!-- =====================================================
+     PAGE HEADER
+===================================================== -->
+
+<section class="page-header">
+
+    <div>
+
+        <span class="small-title">
+            MESS INSIGHTS
+        </span>
+
+        <h1>
+            Meal Experience
+        </h1>
+
+        <p>
+            Understand meal ratings and track the overall
+            dining experience of hostel residents.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SUMMARY CARDS
+===================================================== -->
+
+<section class="section">
+
+    <div class="report-grid">
+
+
+        <!-- Average Rating -->
+
+        <div class="report-card">
+
+            <span>
+                Average Rating
+            </span>
+
+            <strong id="averageRating">
+                --
+            </strong>
+
+            <small>
+                Based on submitted feedback
+            </small>
+
+        </div>
+
+
+        <!-- Meals -->
+
+        <div class="report-card">
+
+            <span>
+                Meals Today
+            </span>
+
+            <strong id="mealCount">
+                0
+            </strong>
+
+            <small>
+                Scheduled meals
+            </small>
+
+        </div>
+
+
+        <!-- Menu Items -->
+
+        <div class="report-card">
+
+            <span>
+                Menu Items
+            </span>
+
+            <strong id="menuCount">
+                0
+            </strong>
+
+            <small>
+                Available food items
+            </small>
+
+        </div>
+
+
+        <!-- Residents -->
+
+        <div class="report-card">
+
+            <span>
+                Residents
+            </span>
+
+            <strong id="residentCount">
+                0
+            </strong>
+
+            <small>
+                Registered residents
+            </small>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     DAILY RATING
+===================================================== -->
+
+<section class="section report-details">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="small-title">
+                DAILY INSIGHT
+            </span>
+
+            <h2>
+                Today's Rating
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="rating-display">
+
+        <div class="big-rating">
+
+            <strong id="dailyRating">
+                --
+            </strong>
+
+            <span>
+                / 5
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <p>
+                Average rating received for today's meals.
+            </p>
+
+            <div id="ratingStars"
+                 class="rating-stars">
+
+                ☆ ☆ ☆ ☆ ☆
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     LOW RATED MEALS
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="small-title">
+                AREAS TO IMPROVE
+            </span>
+
+            <h2>
+                Low-Rated Meals
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div id="lowRatedMeals"
+         class="low-rated-container">
+
+        <div class="loading">
+            Loading report...
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-left">
+
+        <div class="logo-box">
+            M
+        </div>
+
+        <div>
+
+            <strong>
+                MessMate
+            </strong>
+
+            <span>
+                Making hostel meals better.
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-center">
+        Hostel Mess Management System
+    </div>
+
+
+    <div class="footer-right">
+        © 2026 MessMate
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+    const API = "/api";
+
+
+    /* =====================================================
+       DATE FORMAT
+    ===================================================== */
+
+    function formatDate(date) {
+
+        const year =
+            date.getFullYear();
+
+        const month =
+            String(date.getMonth() + 1)
+                .padStart(2, "0");
+
+        const day =
+            String(date.getDate())
+                .padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+
+    }
+
+
+    const today =
+        formatDate(new Date());
+
+
+
+    /* =====================================================
+       LOAD RESIDENTS
+    ===================================================== */
+
+    async function loadResidents() {
+
+        try {
+
+            const response =
+                await fetch(
+                    API + "/residents"
+                );
+
+            const residents =
+                await response.json();
+
+            document.getElementById(
+                "residentCount"
+            ).textContent =
+                residents.length;
+
+        } catch (error) {
+
+            console.error(
+                "Resident loading error:",
+                error
+            );
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       LOAD MENU ITEMS
+    ===================================================== */
+
+    async function loadMenuItems() {
+
+        try {
+
+            const response =
+                await fetch(
+                    API + "/menu-items"
+                );
+
+            const items =
+                await response.json();
+
+            document.getElementById(
+                "menuCount"
+            ).textContent =
+                items.length;
+
+        } catch (error) {
+
+            console.error(
+                "Menu item loading error:",
+                error
+            );
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       LOAD TODAY'S MEALS
+    ===================================================== */
+
+    async function loadMeals() {
+
+        try {
+
+            const response =
+                await fetch(
+                    API +
+                    "/meals?from=" +
+                    today +
+                    "&to=" +
+                    today
+                );
+
+            const meals =
+                await response.json();
+
+            document.getElementById(
+                "mealCount"
+            ).textContent =
+                meals.length;
+
+        } catch (error) {
+
+            console.error(
+                "Meal loading error:",
+                error
+            );
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       LOAD OVERALL RATING
+    ===================================================== */
+
+    async function loadAverageRating() {
+
+        try {
+
+            const response =
+                await fetch(
+                    API +
+                    "/reports/average/day?date=" +
+                    today
+                );
+
+            const rating =
+                await response.json();
+
+
+            const value =
+                Number(rating);
+
+
+            if (value > 0) {
+
+                document.getElementById(
+                    "averageRating"
+                ).textContent =
+                    value.toFixed(1);
+
+                document.getElementById(
+                    "dailyRating"
+                ).textContent =
+                    value.toFixed(1);
+
+
+                displayStars(value);
+
+            } else {
+
+                document.getElementById(
+                    "averageRating"
+                ).textContent =
+                    "--";
+
+                document.getElementById(
+                    "dailyRating"
+                ).textContent =
+                    "--";
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Rating loading error:",
+                error
+            );
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       DISPLAY STARS
+    ===================================================== */
+
+    function displayStars(rating) {
+
+        const container =
+            document.getElementById(
+                "ratingStars"
+            );
+
+
+        const rounded =
+            Math.round(rating);
+
+
+        let stars = "";
+
+
+        for (
+            let i = 1;
+            i <= 5;
+            i++
+        ) {
+
+            stars +=
+                i <= rounded
+                    ? "★ "
+                    : "☆ ";
+
+        }
+
+
+        container.textContent =
+            stars;
+
+    }
+
+
+
+    /* =====================================================
+       LOAD LOW RATED MEALS
+    ===================================================== */
+
+    async function loadLowRatedMeals() {
+
+        const container =
+            document.getElementById(
+                "lowRatedMeals"
+            );
+
+
+        const fromDate =
+            new Date();
+
+        fromDate.setDate(
+            fromDate.getDate() - 7
+        );
+
+
+        const from =
+            formatDate(fromDate);
+
+
+        const to =
+            formatDate(new Date());
+
+
+        try {
+
+            const response =
+                await fetch(
+                    API +
+                    "/reports/low-rated?from=" +
+                    from +
+                    "&to=" +
+                    to +
+                    "&threshold=3"
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load report"
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            if (!data.length) {
+
+                container.innerHTML = `
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ✓
+                    </div>
+
+                    <h3>
+                        No low-rated meals
+                    </h3>
+
+                    <p>
+                        No meals with a rating of
+                        3.0 or below were found
+                        in the last 7 days.
+                    </p>
+
+                </div>
+
+            `;
+
+                return;
+
+            }
+
+
+            container.innerHTML = "";
+
+
+            data.forEach(row => {
+
+                const meal =
+                    row[0];
+
+                const rating =
+                    Number(row[1]);
+
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "low-rated-card";
+
+
+                const date =
+                    new Date(
+                        meal.mealDate
+                    );
+
+
+                const formattedDate =
+                    date.toLocaleDateString(
+                        "en-IN",
+                        {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric"
+                        }
+                    );
+
+
+                card.innerHTML = `
+
+                <div class="low-rated-info">
+
+                    <span class="small-title">
+                        ${meal.mealType}
+                    </span>
+
+                    <h3>
+                        ${formattedDate}
+                    </h3>
+
+                    <div class="menu-items">
+
+                        ${
+                    meal.menuItems &&
+                    meal.menuItems.length
+
+                        ? meal.menuItems
+                            .map(
+                                item =>
+                                    `
+                                    <span class="menu-tag">
+                                        ${escapeHTML(
+                                        item.name
+                                    )}
+                                    </span>
+                                    `
+                            )
+                            .join("")
+
+                        : `
+                                <span class="menu-empty">
+                                    Menu not specified
+                                </span>
+                            `
+                }
+
+                    </div>
+
+                </div>
+
+
+                <div class="low-rating">
+
+                    <strong>
+                        ${rating.toFixed(1)}
+                    </strong>
+
+                    <span>
+                        ★
+                    </span>
+
+                    <small>
+                        Average rating
+                    </small>
+
+                </div>
+
+            `;
+
+
+                container.appendChild(
+                    card
+                );
+
+            });
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            container.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Unable to load report
+                </h3>
+
+                <p>
+                    Please make sure the
+                    Spring Boot server is running.
+                </p>
+
+                <button
+                    class="button primary"
+                    onclick="loadLowRatedMeals()">
+
+                    Try Again
+
+                </button>
+
+            </div>
+
+        `;
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
+
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            text ?? "";
+
+        return div.innerHTML;
+
+    }
+
+
+
+    /* =====================================================
+       LOAD EVERYTHING
+    ===================================================== */
+
+    loadResidents();
+
+    loadMenuItems();
+
+    loadMeals();
+
+    loadAverageRating();
+
+    loadLowRatedMeals();
+
+</script>
+
+
+</body>
+
+</html>
