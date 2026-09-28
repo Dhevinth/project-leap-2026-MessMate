@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Warden Login - MessMate</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+<body class="auth-page">
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="index.html"
+           class="brand">
+            MessMate
+        </a>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="student-login.html">
+                Student Login
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main class="auth-main">
+
+    <div class="auth-card">
+
+        <div class="auth-icon">
+            🛡️
+        </div>
+
+        <h1>
+            Warden Login
+        </h1>
+
+        <p class="auth-description">
+            Login to manage students, meals and feedback.
+        </p>
+
+
+        <form id="adminLoginForm">
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                    type="text"
+                    id="username"
+                    placeholder="Enter username"
+                    required
+            >
+
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                    required
+            >
+
+
+            <button
+                    type="submit"
+                    class="auth-button">
+
+                Login
+
+            </button>
+
+        </form>
+
+
+        <div id="message"></div>
+
+
+        <div class="auth-footer">
+
+            Student?
+
+            <a href="student-login.html">
+                Student Login
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    document
+        .getElementById("adminLoginForm")
+        .addEventListener("submit", async function (event) {
+
+            event.preventDefault();
+
+
+            const username =
+                document.getElementById("username")
+                    .value.trim();
+
+            const password =
+                document.getElementById("password")
+                    .value;
+
+
+            const message =
+                document.getElementById("message");
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/auth/admin/login",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                username: username,
+                                password: password
+                            })
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        "Invalid username or password"
+                    );
+
+                }
+
+
+                localStorage.setItem(
+                    "adminId",
+                    result.id
+                );
+
+                localStorage.setItem(
+                    "adminUsername",
+                    result.username
+                );
+
+                localStorage.setItem(
+                    "adminRole",
+                    result.role
+                );
+
+
+                message.className =
+                    "success-message";
+
+                message.textContent =
+                    "Login successful!";
+
+
+                setTimeout(function () {
+
+                    window.location.href =
+                        "admin-dashboard.html";
+
+                }, 500);
+
+
+            } catch (error) {
+
+                message.className =
+                    "error-message";
+
+                message.textContent =
+                    error.message;
+
+            }
+
+        });
+
+</script>
+
+</body>
+
+</html>

@@ -2,10 +2,7 @@ package com.messmate.controller;
 
 import com.messmate.model.Feedback;
 import com.messmate.service.FeedbackService;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,38 +13,34 @@ import java.util.List;
 @RequestMapping("/api/feedback")
 public class FeedbackController {
 
-    private final FeedbackService service;
+    private final FeedbackService feedbackService;
 
-    public FeedbackController(FeedbackService service) {
-        this.service = service;
-    }
-
-    @GetMapping
-    public List<Feedback> getAll() {
-        return service.getAll();
+    public FeedbackController(FeedbackService feedbackService) {
+        this.feedbackService = feedbackService;
     }
 
     @PostMapping
     public ResponseEntity<Feedback> create(
-            @RequestBody FeedbackRequest request) {
-
-        Feedback feedback = service.create(
-                request.residentId(),
-                request.mealId(),
-                request.rating(),
-                request.comment()
-        );
+            @Valid @RequestBody Feedback feedback) {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(feedback);
+                .body(feedbackService.create(feedback));
     }
 
-    public record FeedbackRequest(
-            @NotNull Long residentId,
-            @NotNull Long mealId,
-            @NotNull @Min(1) @Max(5) Integer rating,
-            @Size(max = 500) String comment
-    ) {
+    @GetMapping
+    public ResponseEntity<List<Feedback>> getAll() {
+        return ResponseEntity.ok(
+                feedbackService.getAll()
+        );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Feedback> getById(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                feedbackService.getById(id)
+        );
     }
 }

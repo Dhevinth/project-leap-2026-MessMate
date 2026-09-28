@@ -4,159 +4,159 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MessMate | Feedback</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-          rel="stylesheet">
+    <title>Meal Feedback - MessMate</title>
 
     <link rel="stylesheet"
           href="css/style.css">
 
 </head>
 
-<body>
+<body class="dashboard-page">
 
-<header class="navbar">
+<nav class="navbar">
 
-    <a href="index.html" class="logo">
+    <div class="nav-container">
 
-        <div class="logo-box">M</div>
+        <a href="student-dashboard.html"
+           class="brand">
+            MessMate
+        </a>
 
-        <div>
-            <h2>MessMate</h2>
-            <span>HOSTEL MESS MANAGEMENT</span>
+        <div class="nav-links">
+
+            <a href="student-dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="menu.html">
+                Menu
+            </a>
+
+            <a href="optout.html">
+                Meal Opt-Out
+            </a>
+
+            <a href="#"
+               id="logoutBtn">
+                Logout
+            </a>
+
         </div>
 
-    </a>
+    </div>
 
-    <nav>
-
-        <a href="index.html">Home</a>
-
-        <a href="index.html#today">
-            Today's Menu
-        </a>
-
-        <a href="menu.html">
-            Weekly Menu
-        </a>
-
-        <a href="feedback.html" class="active">
-            Feedback
-        </a>
-
-        <a href="reports.html">
-            Reports
-        </a>
-
-    </nav>
-
-    <a href="residents.html"
-       class="resident-btn">
-        Residents
-    </a>
-
-</header>
+</nav>
 
 
-<section class="page-header">
+<main>
 
-    <span class="small-title">
-        YOUR VOICE MATTERS
-    </span>
+    <section class="dashboard-header">
 
-    <h1>
-        Share Your Feedback
-    </h1>
+        <div>
 
-    <p>
-        Tell us how your meal was. Your feedback helps
-        improve the hostel dining experience.
-    </p>
+            <p class="small-title">
+                STUDENT PORTAL
+            </p>
 
-</section>
+            <h1>
+                Meal Feedback
+            </h1>
+
+            <p>
+                Rate your meal and share your feedback.
+            </p>
+
+        </div>
+
+    </section>
 
 
-<section class="section">
+    <section class="student-profile-card">
 
-    <div class="feedback-card"
-         style="max-width:700px;margin:auto;">
+        <h2>
+            Submit Feedback
+        </h2>
+
+        <br>
+
 
         <form id="feedbackForm">
 
-            <label>Resident</label>
+            <label for="meal">
+                Select Meal
+            </label>
 
-            <select id="residentId" required
-                    style="width:100%;padding:14px;margin:8px 0 20px;border:1px solid #dce7e7;border-radius:8px;">
+            <select id="meal"
+                    required>
+
                 <option value="">
-                    Select Resident
+                    Loading meals...
                 </option>
+
             </select>
 
 
-            <label>Meal</label>
-
-            <select id="mealId" required
-                    style="width:100%;padding:14px;margin:8px 0 20px;border:1px solid #dce7e7;border-radius:8px;">
-                <option value="">
-                    Select Meal
-                </option>
-            </select>
+            <br><br>
 
 
-            <label>Rating</label>
+            <label for="rating">
+                Rating
+            </label>
 
-            <select id="rating" required
-                    style="width:100%;padding:14px;margin:8px 0 20px;border:1px solid #dce7e7;border-radius:8px;">
+            <select id="rating"
+                    required>
 
                 <option value="">
-                    Select Rating
-                </option>
-
-                <option value="5">
-                    5 - Excellent
-                </option>
-
-                <option value="4">
-                    4 - Good
-                </option>
-
-                <option value="3">
-                    3 - Average
-                </option>
-
-                <option value="2">
-                    2 - Poor
+                    Select rating
                 </option>
 
                 <option value="1">
                     1 - Very Poor
                 </option>
 
+                <option value="2">
+                    2 - Poor
+                </option>
+
+                <option value="3">
+                    3 - Average
+                </option>
+
+                <option value="4">
+                    4 - Good
+                </option>
+
+                <option value="5">
+                    5 - Excellent
+                </option>
+
             </select>
 
 
-            <label>
+            <br><br>
+
+
+            <label for="comment">
                 Comment
             </label>
 
-            <textarea id="comment"
-                      maxlength="500"
-                      rows="5"
-                      placeholder="Share your experience..."
-                      style="width:100%;padding:14px;margin:8px 0 25px;border:1px solid #dce7e7;border-radius:8px;resize:vertical;"></textarea>
+            <textarea
+                    id="comment"
+                    rows="5"
+                    placeholder="Write your feedback..."
+            ></textarea>
 
 
-            <button type="submit"
-                    class="button primary">
+            <br>
+
+
+            <button
+                    type="submit"
+                    class="auth-button">
 
                 Submit Feedback
 
@@ -165,187 +165,135 @@
         </form>
 
 
-        <div id="message"
-             style="margin-top:20px;">
-        </div>
+        <div id="message"></div>
 
-    </div>
+    </section>
 
-</section>
-
-
-<footer>
-
-    <div class="footer-left">
-
-        <div class="logo-box">
-            M
-        </div>
-
-        <div>
-
-            <strong>
-                MessMate
-            </strong>
-
-            <span>
-                Making hostel meals better.
-            </span>
-
-        </div>
-
-    </div>
-
-    <div class="footer-center">
-        Hostel Mess Management System
-    </div>
-
-    <div class="footer-right">
-        © 2026 MessMate
-    </div>
-
-</footer>
+</main>
 
 
 <script>
 
-    const API = "/api";
+    const studentId =
+        localStorage.getItem("studentId");
 
 
-    async function loadResidents() {
+    if (!studentId) {
 
-        const response =
-            await fetch(
-                API + "/residents"
-            );
-
-        const residents =
-            await response.json();
-
-        const select =
-            document.getElementById(
-                "residentId"
-            );
-
-        residents.forEach(resident => {
-
-            const option =
-                document.createElement("option");
-
-            option.value =
-                resident.id;
-
-            option.textContent =
-                resident.name +
-                " - Room " +
-                resident.roomNo;
-
-            select.appendChild(option);
-
-        });
+        window.location.href =
+            "student-login.html";
 
     }
 
 
     async function loadMeals() {
 
-        const today =
-            new Date()
-                .toISOString()
-                .split("T")[0];
-
-
-        const response =
-            await fetch(
-                API +
-                "/meals?from=" +
-                today +
-                "&to=" +
-                today
-            );
-
-
-        const meals =
-            await response.json();
-
-
         const select =
-            document.getElementById(
-                "mealId"
-            );
+            document.getElementById("meal");
 
 
-        meals.forEach(meal => {
+        const today =
+            new Date();
 
-            const option =
-                document.createElement("option");
 
-            option.value =
-                meal.id;
+        const date =
+            today.toISOString().split("T")[0];
 
-            option.textContent =
-                meal.mealType +
-                " - " +
-                meal.mealDate;
 
-            select.appendChild(option);
+        try {
 
-        });
+            const response =
+                await fetch(
+                    "/api/meals?from=" +
+                    date +
+                    "&to=" +
+                    date
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load meals."
+                );
+
+            }
+
+
+            const meals =
+                await response.json();
+
+
+            select.innerHTML =
+                '<option value="">Select a meal</option>';
+
+
+            meals.forEach(function (meal) {
+
+                const option =
+                    document.createElement("option");
+
+
+                option.value =
+                    meal.id;
+
+
+                option.textContent =
+                    meal.mealDate +
+                    " - " +
+                    meal.mealType;
+
+
+                select.appendChild(option);
+
+            });
+
+
+        } catch (error) {
+
+            select.innerHTML =
+                '<option value="">Unable to load meals</option>';
+
+            document.getElementById("message")
+                .className = "error-message";
+
+            document.getElementById("message")
+                .textContent = error.message;
+
+        }
 
     }
 
 
-    document.getElementById(
-        "feedbackForm"
-    ).addEventListener(
-        "submit",
-        async function(event) {
+    document
+        .getElementById("feedbackForm")
+        .addEventListener("submit", async function (event) {
 
             event.preventDefault();
 
 
-            const data = {
+            const mealId =
+                document.getElementById("meal").value;
 
-                residentId:
-                    Number(
-                        document.getElementById(
-                            "residentId"
-                        ).value
-                    ),
 
-                mealId:
-                    Number(
-                        document.getElementById(
-                            "mealId"
-                        ).value
-                    ),
+            const rating =
+                document.getElementById("rating").value;
 
-                rating:
-                    Number(
-                        document.getElementById(
-                            "rating"
-                        ).value
-                    ),
 
-                comment:
-                document.getElementById(
-                    "comment"
-                ).value
-
-            };
+            const comment =
+                document.getElementById("comment")
+                    .value.trim();
 
 
             const message =
-                document.getElementById(
-                    "message"
-                );
+                document.getElementById("message");
 
 
             try {
 
                 const response =
                     await fetch(
-                        API + "/feedback",
+                        "/api/feedback",
                         {
                             method: "POST",
 
@@ -354,65 +302,86 @@
                                     "application/json"
                             },
 
-                            body:
-                                JSON.stringify(data)
+                            body: JSON.stringify({
+
+                                residentId:
+                                    Number(studentId),
+
+                                mealId:
+                                    Number(mealId),
+
+                                rating:
+                                    Number(rating),
+
+                                comment:
+                                comment
+
+                            })
                         }
                     );
 
 
                 const result =
-                    await response.json();
+                    await response.json()
+                        .catch(() => ({}));
 
 
                 if (!response.ok) {
 
                     throw new Error(
-                        result.error ||
-                        "Unable to submit feedback"
+                        result.message ||
+                        "Unable to submit feedback."
                     );
 
                 }
 
 
-                message.innerHTML = `
-
-                <div style="
-                    padding:15px;
-                    border-radius:8px;
-                    background:#eaf7f6;
-                    color:#006f73;
-                ">
-                    ✓ Feedback submitted successfully.
-                </div>
-
-            `;
+                message.className =
+                    "success-message";
 
 
-                this.reset();
+                message.textContent =
+                    "Feedback submitted successfully.";
+
+
+                document
+                    .getElementById("feedbackForm")
+                    .reset();
 
 
             } catch (error) {
 
-                message.innerHTML = `
+                message.className =
+                    "error-message";
 
-                <div style="
-                    padding:15px;
-                    border-radius:8px;
-                    background:#fff0f0;
-                    color:#c94b4b;
-                ">
-                    ${error.message}
-                </div>
 
-            `;
+                message.textContent =
+                    error.message;
 
             }
 
-        }
-    );
+        });
 
 
-    loadResidents();
+    document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function (event) {
+
+            event.preventDefault();
+
+
+            localStorage.removeItem("studentId");
+
+            localStorage.removeItem(
+                "studentRollNumber"
+            );
+
+
+            window.location.href =
+                "student-login.html";
+
+        });
+
 
     loadMeals();
 

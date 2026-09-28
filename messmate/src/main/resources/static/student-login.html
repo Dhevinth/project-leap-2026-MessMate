@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MessMate | Student Login</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+        <div class="logo-box">M</div>
+
+        <div>
+            <h2>MessMate</h2>
+            <span>HOSTEL MESS MANAGEMENT</span>
+        </div>
+    </a>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="menu.html">Weekly Menu</a>
+        <a href="feedback.html">Feedback</a>
+        <a href="reports.html">Reports</a>
+    </nav>
+
+    <a href="student-login.html" class="resident-btn">
+        Student Login
+    </a>
+
+</header>
+
+
+<main class="auth-page">
+
+    <div class="auth-card">
+
+        <div class="auth-icon">M</div>
+
+        <span class="small-title">
+            STUDENT PORTAL
+        </span>
+
+        <h1>Welcome Back</h1>
+
+        <p class="auth-description">
+            Login using your roll number and password.
+        </p>
+
+        <form id="loginForm">
+
+            <label for="rollNumber">
+                Roll Number
+            </label>
+
+            <input
+                    type="text"
+                    id="rollNumber"
+                    maxlength="7"
+                    pattern="[A-Za-z0-9]{7}"
+                    placeholder="Example: 24CCE01"
+                    required
+            >
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+            >
+
+            <button
+                    type="submit"
+                    class="button primary auth-button">
+                Login
+            </button>
+
+        </form>
+
+        <div id="message"></div>
+
+        <div class="auth-footer">
+
+            <span>New student?</span>
+
+            <a href="student-register.html">
+                Create Account
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-left">
+
+        <div class="logo-box">M</div>
+
+        <div>
+            <strong>MessMate</strong>
+            <span>Making hostel meals better.</span>
+        </div>
+
+    </div>
+
+    <div class="footer-center">
+        Hostel Mess Management System
+    </div>
+
+    <div class="footer-right">
+        © 2026 MessMate
+    </div>
+
+</footer>
+
+
+<script>
+
+    const API = "/api";
+
+    document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            const rollNumber =
+                document.getElementById("rollNumber")
+                    .value
+                    .trim();
+
+            const password =
+                document.getElementById("password")
+                    .value;
+
+            if (!/^[A-Za-z0-9]{7}$/.test(rollNumber)) {
+
+                showMessage(
+                    "Roll number must contain exactly 7 letters and numbers.",
+                    false
+                );
+
+                return;
+            }
+
+            try {
+
+                const response = await fetch(
+                    API + "/auth/student/login",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            rollNumber: rollNumber,
+                            password: password
+                        })
+                    }
+                );
+
+                const result = await response.json();
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.error || "Login failed"
+                    );
+                }
+
+                localStorage.setItem(
+                    "studentId",
+                    result.id
+                );
+
+                localStorage.setItem(
+                    "studentRollNumber",
+                    result.rollNumber
+                );
+
+                showMessage(
+                    "Login successful. Opening dashboard...",
+                    true
+                );
+
+                setTimeout(function() {
+
+                    window.location.href =
+                        "student-dashboard.html";
+
+                }, 700);
+
+            } catch (error) {
+
+                showMessage(
+                    error.message,
+                    false
+                );
+            }
+        });
+
+
+    function showMessage(text, success) {
+
+        const message =
+            document.getElementById("message");
+
+        message.innerHTML = `
+
+        <div class="${success
+            ? "success-message"
+            : "error-message"}">
+
+            ${text}
+
+        </div>
+
+    `;
+    }
+
+</script>
+
+</body>
+</html>

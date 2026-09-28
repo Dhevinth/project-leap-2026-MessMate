@@ -10,75 +10,83 @@ import java.util.List;
 @Service
 public class ResidentService {
 
-    private final ResidentRepository repository;
+    private final ResidentRepository residentRepository;
 
-    public ResidentService(ResidentRepository repository) {
-        this.repository = repository;
+    public ResidentService(ResidentRepository residentRepository) {
+        this.residentRepository = residentRepository;
     }
 
     public List<Resident> getAll() {
-        return repository.findAll();
+        return residentRepository.findAll();
     }
 
     public Resident getById(Long id) {
-        return repository.findById(id)
+        return residentRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "Resident not found with id: " + id
+                                "Student not found with id: " + id
                         ));
     }
 
     public Resident create(Resident resident) {
 
-        if (repository.existsByRollNumber(resident.getRollNumber())) {
+        if (residentRepository.existsByRollNumber(
+                resident.getRollNumber())) {
+
             throw new IllegalArgumentException(
-                    "Roll number already exists"
+                    "Roll number already registered"
             );
         }
 
-        if (repository.existsByRoomNo(resident.getRoomNo())) {
+        if (residentRepository.existsByRoomNo(
+                resident.getRoomNo())) {
+
             throw new IllegalArgumentException(
-                    "Room number already exists"
+                    "Room number already registered"
             );
         }
 
-        return repository.save(resident);
+        return residentRepository.save(resident);
     }
 
-    public Resident update(Long id, Resident data) {
+    public Resident update(Long id, Resident updated) {
 
-        Resident resident = getById(id);
+        Resident existing = getById(id);
 
-        if (!resident.getRollNumber().equals(data.getRollNumber())
-                && repository.existsByRollNumber(data.getRollNumber())) {
+        if (!existing.getRollNumber()
+                .equals(updated.getRollNumber())
+                && residentRepository.existsByRollNumber(
+                updated.getRollNumber())) {
 
             throw new IllegalArgumentException(
-                    "Roll number already exists"
+                    "Roll number already registered"
             );
         }
 
-        if (!resident.getRoomNo().equals(data.getRoomNo())
-                && repository.existsByRoomNo(data.getRoomNo())) {
+        if (!existing.getRoomNo()
+                .equals(updated.getRoomNo())
+                && residentRepository.existsByRoomNo(
+                updated.getRoomNo())) {
 
             throw new IllegalArgumentException(
-                    "Room number already exists"
+                    "Room number already registered"
             );
         }
 
-        resident.setName(data.getName());
-        resident.setRollNumber(data.getRollNumber());
-        resident.setRoomNo(data.getRoomNo());
-        resident.setBlock(data.getBlock());
-        resident.setDepartment(data.getDepartment());
-        resident.setPhone(data.getPhone());
+        existing.setName(updated.getName());
+        existing.setRollNumber(updated.getRollNumber());
+        existing.setRoomNo(updated.getRoomNo());
+        existing.setBlock(updated.getBlock());
+        existing.setDepartment(updated.getDepartment());
+        existing.setPhone(updated.getPhone());
 
-        return repository.save(resident);
+        return residentRepository.save(existing);
     }
 
     public void delete(Long id) {
 
         Resident resident = getById(id);
 
-        repository.delete(resident);
+        residentRepository.delete(resident);
     }
 }

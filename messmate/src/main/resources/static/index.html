@@ -8,1070 +8,139 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>MessMate | Hostel Mess Management</title>
-
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-          rel="stylesheet">
+    <title>MessMate</title>
 
     <link rel="stylesheet"
           href="css/style.css">
 
 </head>
 
-
 <body>
 
+<nav class="navbar">
 
-<!-- ================= NAVBAR ================= -->
-
-<header class="navbar">
-
-    <a href="index.html"
-       class="logo">
-
-        <div class="logo-box">
-            M
-        </div>
-
-        <div>
-
-            <h2>
-                MessMate
-            </h2>
-
-            <span>
-                HOSTEL MESS MANAGEMENT
-            </span>
-
-        </div>
-
-    </a>
-
-
-    <nav>
+    <div class="nav-container">
 
         <a href="index.html"
-           class="active">
-            Home
+           class="brand">
+            MessMate
         </a>
 
-        <a href="#today">
-            Today's Menu
-        </a>
+        <div class="nav-links">
 
-        <a href="menu.html">
-            Weekly Menu
-        </a>
-
-        <a href="feedback.html">
-            Feedback
-        </a>
-
-        <a href="reports.html">
-            Reports
-        </a>
-
-    </nav>
-
-
-    <button class="resident-btn"
-            onclick="openResidents()">
-
-        Residents
-
-    </button>
-
-</header>
-
-
-
-<!-- ================= HERO ================= -->
-
-<section id="home"
-         class="hero">
-
-
-    <div class="hero-content">
-
-
-        <span class="small-title">
-            WELCOME TO MESSMATE
-        </span>
-
-
-        <h1>
-
-            Good food makes
-
-            <span>
-                hostel life better.
-            </span>
-
-        </h1>
-
-
-        <p>
-
-            Discover today's meals, explore the weekly menu,
-            share your dining experience and manage your meal
-            preferences — all in one simple place.
-
-        </p>
-
-
-        <div class="hero-buttons">
-
-
-            <a href="#today"
-               class="button primary">
-
-                View Today's Menu
-
+            <a href="student-login.html">
+                Student Login
             </a>
 
-
-            <a href="feedback.html"
-               class="button secondary">
-
-                Give Feedback
-
+            <a href="student-register.html">
+                Register
             </a>
 
-
-        </div>
-
-
-        <div style="
-            margin-top:20px;
-        ">
-
-            <a href="optout.html"
-               style="
-                   color:#008b8b;
-                   font-size:12px;
-                   font-weight:600;
-                   text-decoration:none;
-               ">
-
-                Need to skip a meal?
-                Manage Meal Opt-Out →
-
+            <a href="admin-login.html">
+                Warden Login
             </a>
 
         </div>
 
-
     </div>
 
+</nav>
 
 
-    <!-- TODAY CARD -->
+<main>
 
-    <div class="today-card">
-
-
-        <div class="today-header">
-
-
-            <div>
-
-                <span>
-                    Today's Meals
-                </span>
-
-                <h3 id="currentDate">
-                    Loading...
-                </h3>
-
-            </div>
-
-
-            <div class="open-status">
-
-                <i></i>
-
-                Mess Open
-
-            </div>
-
-
-        </div>
-
-
-
-        <div class="meal-time-row">
-
-
-            <div>
-
-                <span>
-                    Breakfast
-                </span>
-
-                <strong>
-                    08:00 AM
-                </strong>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    Lunch
-                </span>
-
-                <strong>
-                    01:00 PM
-                </strong>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    Dinner
-                </span>
-
-                <strong>
-                    08:00 PM
-                </strong>
-
-            </div>
-
-
-        </div>
-
-
-    </div>
-
-
-</section>
-
-
-
-<!-- ================= STATS ================= -->
-
-<section class="stats-container">
-
-
-    <div class="stat">
-
-        <div class="stat-icon">
-            🍽️
-        </div>
+    <section class="dashboard-header">
 
         <div>
 
-            <strong id="mealCount">
-                0
-            </strong>
+            <p class="small-title">
+                HOSTEL MESS MANAGEMENT SYSTEM
+            </p>
 
-            <span>
-                Meals Today
-            </span>
+            <h1>
+                Welcome to MessMate
+            </h1>
 
-        </div>
-
-    </div>
-
-
-
-    <div class="stat">
-
-        <div class="stat-icon">
-            🥗
-        </div>
-
-        <div>
-
-            <strong id="menuCount">
-                0
-            </strong>
-
-            <span>
-                Menu Items
-            </span>
+            <p>
+                Manage hostel meals, student feedback,
+                meal opt-outs and mess information.
+            </p>
 
         </div>
 
-    </div>
+    </section>
 
 
+    <section class="feature-grid">
 
-    <div class="stat">
+        <a href="student-login.html"
+           class="feature-card">
 
-        <div class="stat-icon">
-            👥
-        </div>
-
-        <div>
-
-            <strong id="residentCount">
-                0
-            </strong>
-
-            <span>
-                Residents
-            </span>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="stat">
-
-        <div class="stat-icon">
-            ★
-        </div>
-
-        <div>
-
-            <strong id="averageRating">
-                --
-            </strong>
-
-            <span>
-                Average Rating
-            </span>
-
-        </div>
-
-    </div>
-
-
-</section>
-
-
-
-<!-- ================= TODAY'S MENU ================= -->
-
-<section id="today"
-         class="section">
-
-
-    <div class="section-heading">
-
-
-        <div>
-
-            <span class="small-title">
-                WHAT'S COOKING
-            </span>
-
-            <h2>
-                Today's Menu
-            </h2>
-
-        </div>
-
-
-        <span class="date-label"
-              id="todayLabel">
-        </span>
-
-
-    </div>
-
-
-
-    <div id="todayMenu"
-         class="meal-grid">
-
-        <div class="loading">
-            Loading today's menu...
-        </div>
-
-    </div>
-
-
-</section>
-
-
-
-<!-- ================= FEATURES ================= -->
-
-<section class="features">
-
-
-    <div class="features-intro">
-
-
-        <span class="small-title">
-            WHY MESSMATE
-        </span>
-
-
-        <h2>
-
-            Everything you need
-            for a better mess experience.
-
-        </h2>
-
-
-        <p>
-
-            Simple and practical tools designed to make
-            hostel dining more convenient for residents
-            and easier to manage.
-
-        </p>
-
-
-    </div>
-
-
-
-    <div class="feature-grid">
-
-
-        <!-- FEATURE 1 -->
-
-        <div class="feature">
-
-            <span>
-                01
-            </span>
+            <div class="feature-icon">
+                🎓
+            </div>
 
             <h3>
-                Explore Menu
+                Student Portal
             </h3>
 
             <p>
-
-                Check today's meals before heading
-                to the mess.
-
+                Login and access your personal
+                hostel and mess information.
             </p>
 
-
-            <a href="#today"
-               class="feature-link">
-
-                View Today's Menu →
-
-            </a>
-
-        </div>
+        </a>
 
 
+        <a href="student-register.html"
+           class="feature-card">
 
-        <!-- FEATURE 2 -->
-
-        <div class="feature">
-
-            <span>
-                02
-            </span>
+            <div class="feature-icon">
+                📝
+            </div>
 
             <h3>
-                Share Feedback
+                Student Registration
             </h3>
 
             <p>
-
-                Rate your meals and share useful comments
-                with the mess team.
-
+                Register your details permanently
+                in the MessMate database.
             </p>
 
-
-            <a href="feedback.html"
-               class="feature-link">
-
-                Give Feedback →
-
-            </a>
-
-        </div>
+        </a>
 
 
+        <a href="admin-login.html"
+           class="feature-card">
 
-        <!-- FEATURE 3 -->
-
-        <div class="feature">
-
-            <span>
-                03
-            </span>
+            <div class="feature-icon">
+                🛡️
+            </div>
 
             <h3>
-                Meal Opt-Out
+                Warden Portal
             </h3>
 
             <p>
-
-                Skip meals when you don't need them and
-                help reduce food wastage.
-
-            </p>
-
-
-            <a href="optout.html"
-               class="feature-link">
-
-                Manage Opt-Out →
-
-            </a>
-
-        </div>
-
-
-
-        <!-- FEATURE 4 -->
-
-        <div class="feature">
-
-            <span>
-                04
-            </span>
-
-            <h3>
-                View Reports
-            </h3>
-
-            <p>
-
-                Understand meal ratings and identify
-                areas for improvement.
-
-            </p>
-
-
-            <a href="reports.html"
-               class="feature-link">
-
-                View Reports →
-
-            </a>
-
-        </div>
-
-
-    </div>
-
-
-</section>
-
-
-
-<!-- ================= WEEKLY MENU ================= -->
-
-<section id="weekly"
-         class="section">
-
-
-    <div class="section-heading">
-
-
-        <div>
-
-            <span class="small-title">
-                PLAN AHEAD
-            </span>
-
-            <h2>
-                Weekly Menu
-            </h2>
-
-        </div>
-
-
-        <a href="menu.html"
-           class="section-link">
-
-            View Full Weekly Menu →
-
-        </a>
-
-
-    </div>
-
-
-
-    <div id="weeklyMenu"
-         class="weekly-container">
-
-        <div class="loading">
-            Loading weekly menu...
-        </div>
-
-    </div>
-
-
-</section>
-
-
-
-<!-- ================= FEEDBACK ================= -->
-
-<section id="feedback"
-         class="feedback-section">
-
-
-    <div class="feedback-content">
-
-
-        <span class="small-title">
-            YOUR VOICE MATTERS
-        </span>
-
-
-        <h2>
-
-            Tell us about
-            your meal.
-
-        </h2>
-
-
-        <p>
-
-            Your feedback helps the mess team understand
-            what residents enjoy and where improvements
-            can be made.
-
-        </p>
-
-
-        <a href="feedback.html"
-           class="button primary">
-
-            Give Feedback
-
-        </a>
-
-
-    </div>
-
-
-
-    <div class="feedback-card">
-
-
-        <span>
-            How was your overall experience?
-        </span>
-
-
-        <div class="stars">
-            ★ ★ ★ ★ ★
-        </div>
-
-
-        <p class="feedback-note">
-
-            Your honest feedback helps us improve
-            the quality of meals.
-
-        </p>
-
-
-        <a href="feedback.html"
-           class="feedback-link">
-
-            Rate Your Meal →
-
-        </a>
-
-
-    </div>
-
-
-</section>
-
-
-
-<!-- ================= REPORTS ================= -->
-
-<section id="reports"
-         class="section">
-
-
-    <div class="section-heading">
-
-
-        <div>
-
-            <span class="small-title">
-                MESS INSIGHTS
-            </span>
-
-            <h2>
-                Meal Experience
-            </h2>
-
-        </div>
-
-
-        <a href="reports.html"
-           class="section-link">
-
-            View Detailed Reports →
-
-        </a>
-
-
-    </div>
-
-
-
-    <div class="report-grid">
-
-
-        <div class="report-card">
-
-
-            <span>
-                Average Rating
-            </span>
-
-
-            <strong id="reportRating">
-                --
-            </strong>
-
-
-            <small>
-                Based on submitted feedback
-            </small>
-
-
-        </div>
-
-
-
-        <div class="report-card">
-
-
-            <span>
-                Meals Today
-            </span>
-
-
-            <strong id="reportMeals">
-                0
-            </strong>
-
-
-            <small>
-                Scheduled meals
-            </small>
-
-
-        </div>
-
-
-
-        <div class="report-card">
-
-
-            <span>
-                Menu Items
-            </span>
-
-
-            <strong id="reportItems">
-                0
-            </strong>
-
-
-            <small>
-                Available food items
-            </small>
-
-
-        </div>
-
-
-    </div>
-
-
-</section>
-
-
-
-<!-- ================= QUICK ACTIONS ================= -->
-
-<section style="
-    padding:70px 9%;
-    background:#f4f8f8;
-">
-
-
-    <div style="
-        text-align:center;
-        max-width:650px;
-        margin:auto;
-    ">
-
-
-        <span class="small-title">
-            QUICK ACTIONS
-        </span>
-
-
-        <h2 style="
-            margin-top:10px;
-            color:#263238;
-            font-family:'Playfair Display',serif;
-            font-size:38px;
-        ">
-
-            Manage your mess experience
-
-        </h2>
-
-
-        <p style="
-            margin-top:12px;
-            color:#78909c;
-            font-size:13px;
-            line-height:1.7;
-        ">
-
-            Access the most important MessMate features
-            from one convenient place.
-
-        </p>
-
-
-    </div>
-
-
-
-    <div style="
-        max-width:1000px;
-        margin:35px auto 0;
-        display:grid;
-        grid-template-columns:repeat(3,1fr);
-        gap:18px;
-    ">
-
-
-        <a href="menu.html"
-           style="
-               text-decoration:none;
-               background:white;
-               border:1px solid #dfe8e8;
-               padding:28px;
-               border-radius:10px;
-               transition:.2s;
-           ">
-
-            <span style="
-                font-size:24px;
-            ">
-                🍽️
-            </span>
-
-
-            <h3 style="
-                margin-top:14px;
-                color:#263238;
-            ">
-                Weekly Menu
-            </h3>
-
-
-            <p style="
-                margin-top:8px;
-                color:#78909c;
-                font-size:11px;
-            ">
-                Plan your meals for the week.
+                Manage students, meals and
+                feedback.
             </p>
 
         </a>
 
+    </section>
 
+</main>
 
-        <a href="optout.html"
-           style="
-               text-decoration:none;
-               background:white;
-               border:1px solid #dfe8e8;
-               padding:28px;
-               border-radius:10px;
-           ">
-
-            <span style="
-                font-size:24px;
-            ">
-                🌱
-            </span>
-
-
-            <h3 style="
-                margin-top:14px;
-                color:#263238;
-            ">
-                Meal Opt-Out
-            </h3>
-
-
-            <p style="
-                margin-top:8px;
-                color:#78909c;
-                font-size:11px;
-            ">
-                Skip a meal and reduce food wastage.
-            </p>
-
-        </a>
-
-
-
-        <a href="reports.html"
-           style="
-               text-decoration:none;
-               background:white;
-               border:1px solid #dfe8e8;
-               padding:28px;
-               border-radius:10px;
-           ">
-
-            <span style="
-                font-size:24px;
-            ">
-                📊
-            </span>
-
-
-            <h3 style="
-                margin-top:14px;
-                color:#263238;
-            ">
-                Reports
-            </h3>
-
-
-            <p style="
-                margin-top:8px;
-                color:#78909c;
-                font-size:11px;
-            ">
-                Explore meal ratings and insights.
-            </p>
-
-        </a>
-
-
-    </div>
-
-
-</section>
-
-
-
-<!-- ================= FOOTER ================= -->
 
 <footer>
 
-
-    <div class="footer-left">
-
-
-        <div class="logo-box">
-            M
-        </div>
-
-
-        <div>
-
-            <strong>
-                MessMate
-            </strong>
-
-            <span>
-                Making hostel meals better.
-            </span>
-
-        </div>
-
-
-    </div>
-
-
-
-    <div class="footer-center">
-        Hostel Mess Management System
-    </div>
-
-
-
-    <div class="footer-right">
+    <p>
         © 2026 MessMate
-    </div>
-
+    </p>
 
 </footer>
-
-
-
-<!-- ================= RESIDENT MODAL ================= -->
-
-<div id="residentModal"
-     class="modal">
-
-
-    <div class="modal-content">
-
-
-        <button class="modal-close"
-                onclick="closeResidents()">
-
-            ×
-
-        </button>
-
-
-        <span class="small-title">
-            MESSMATE
-        </span>
-
-
-        <h2>
-            Residents
-        </h2>
-
-
-        <p>
-            View registered hostel residents.
-        </p>
-
-
-        <div id="residentList">
-
-            <div class="loading">
-                Loading residents...
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-</div>
-
-
-
-<!-- ================= JAVASCRIPT ================= -->
-
-<script src="js/app.js"></script>
-
 
 </body>
 

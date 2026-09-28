@@ -1,11 +1,8 @@
 package com.messmate.service;
 
+import com.messmate.exception.ResourceNotFoundException;
 import com.messmate.model.Feedback;
-import com.messmate.model.Meal;
-import com.messmate.model.Resident;
 import com.messmate.repository.FeedbackRepository;
-import com.messmate.repository.MealRepository;
-import com.messmate.repository.ResidentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,42 +11,20 @@ import java.util.List;
 public class FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
-    private final ResidentRepository residentRepository;
-    private final MealRepository mealRepository;
 
-    public FeedbackService(
-            FeedbackRepository feedbackRepository,
-            ResidentRepository residentRepository,
-            MealRepository mealRepository) {
-
+    public FeedbackService(FeedbackRepository feedbackRepository) {
         this.feedbackRepository = feedbackRepository;
-        this.residentRepository = residentRepository;
-        this.mealRepository = mealRepository;
     }
 
-    public Feedback create(
-            Long residentId,
-            Long mealId,
-            Integer rating,
-            String comment) {
+    public Feedback create(Feedback feedback) {
 
-        Resident resident = residentRepository.findById(residentId)
-                .orElseThrow(() ->
-                        new RuntimeException("Resident not found"));
-
-        Meal meal = mealRepository.findById(mealId)
-                .orElseThrow(() ->
-                        new RuntimeException("Meal not found"));
-
-        if (feedbackRepository.existsByResidentIdAndMealId(
-                residentId, mealId)) {
+        if (feedback.getRating() < 1 ||
+                feedback.getRating() > 5) {
 
             throw new IllegalArgumentException(
-                    "Resident has already submitted feedback for this meal");
+                    "Rating must be between 1 and 5"
+            );
         }
-
-        Feedback feedback =
-                new Feedback(resident, meal, rating, comment);
 
         return feedbackRepository.save(feedback);
     }
@@ -58,15 +33,12 @@ public class FeedbackService {
         return feedbackRepository.findAll();
     }
 
-    public Double getAverageRating(Long mealId) {
+    public Feedback getById(Long id) {
 
-        if (!mealRepository.existsById(mealId)) {
-            throw new RuntimeException("Meal not found");
-        }
-
-        Double average =
-                feedbackRepository.getAverageRatingByMeal(mealId);
-
-        return average == null ? 0.0 : average;
+        return feedbackRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Feedback not found with id: " + id
+                        ));
     }
 }
