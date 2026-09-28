@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard - MessMate</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="dashboard-page">
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="student-dashboard.html" class="brand">
+            MessMate
+        </a>
+
+        <div class="nav-links">
+
+            <a href="menu.html">Menu</a>
+
+            <a href="feedback.html">Feedback</a>
+
+            <a href="optout.html">Meal Opt-Out</a>
+
+            <a href="#" id="logoutBtn">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main>
+
+    <section class="dashboard-header">
+
+        <div>
+
+            <p class="small-title">
+                STUDENT PORTAL
+            </p>
+
+            <h1>
+                Welcome, <span id="studentName">Student</span>
+            </h1>
+
+            <p>
+                Your registered information is stored permanently
+                in the MessMate database.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="student-profile-card">
+
+        <div class="profile-heading">
+
+            <div class="profile-avatar">
+                👨‍🎓
+            </div>
+
+            <div>
+
+                <h2>Student Profile</h2>
+
+                <p>
+                    Registered information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-grid">
+
+            <div class="profile-item">
+
+                <span>Name</span>
+
+                <strong id="profileName">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Register Number</span>
+
+                <strong id="profileRollNumber">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Department</span>
+
+                <strong id="profileDepartment">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Phone Number</span>
+
+                <strong id="profilePhone">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Hostel Block</span>
+
+                <strong id="profileBlock">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Room Number</span>
+
+                <strong id="profileRoom">
+                    Loading...
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="feature-grid">
+
+        <a href="menu.html" class="feature-card">
+
+            <div class="feature-icon">
+                🍽️
+            </div>
+
+            <h3>
+                Today's Menu
+            </h3>
+
+            <p>
+                View breakfast, lunch and dinner menus.
+            </p>
+
+        </a>
+
+
+        <a href="feedback.html" class="feature-card">
+
+            <div class="feature-icon">
+                ⭐
+            </div>
+
+            <h3>
+                Give Feedback
+            </h3>
+
+            <p>
+                Rate your meal and submit comments.
+            </p>
+
+        </a>
+
+
+        <a href="optout.html" class="feature-card">
+
+            <div class="feature-icon">
+                🚫
+            </div>
+
+            <h3>
+                Meal Opt-Out
+            </h3>
+
+            <p>
+                Opt out of meals when required.
+            </p>
+
+        </a>
+
+    </section>
+
+</main>
+
+
+<script>
+
+    const rollNumber =
+        localStorage.getItem("studentRollNumber");
+
+
+    if (!rollNumber) {
+
+        window.location.href =
+            "student-login.html";
+
+    }
+
+
+    async function loadStudent() {
+
+        try {
+
+            const response = await fetch(
+                "/api/auth/student/" +
+                encodeURIComponent(rollNumber)
+            );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load student information."
+                );
+
+            }
+
+
+            const student =
+                await response.json();
+
+
+            document.getElementById("studentName")
+                .textContent = student.name;
+
+            document.getElementById("profileName")
+                .textContent = student.name;
+
+            document.getElementById("profileRollNumber")
+                .textContent = student.rollNumber;
+
+            document.getElementById("profileDepartment")
+                .textContent = student.department;
+
+            document.getElementById("profilePhone")
+                .textContent = student.phone;
+
+            document.getElementById("profileBlock")
+                .textContent = "Block " + student.block;
+
+            document.getElementById("profileRoom")
+                .textContent = student.roomNo;
+
+
+        } catch (error) {
+
+            alert(error.message);
+
+            localStorage.removeItem("studentId");
+            localStorage.removeItem("studentRollNumber");
+
+            window.location.href =
+                "student-login.html";
+        }
+    }
+
+
+    document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function (event) {
+
+            event.preventDefault();
+
+            localStorage.removeItem("studentId");
+            localStorage.removeItem("studentRollNumber");
+
+            window.location.href =
+                "student-login.html";
+        });
+
+
+    loadStudent();
+
+</script>
+
+</body>
+
+</html>

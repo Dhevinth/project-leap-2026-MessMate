@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +11,9 @@ import java.time.LocalDateTime;
 @Table(
         name = "feedback",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"resident_id", "meal_id"})
+                @UniqueConstraint(
+                        columnNames = {"resident_id", "meal_id"}
+                )
         }
 )
 public class Feedback {
@@ -35,21 +36,13 @@ public class Feedback {
     @Column(nullable = false)
     private Integer rating;
 
-    @Size(max = 500, message = "Comment cannot exceed 500 characters")
+    @Column(length = 1000)
     private String comment;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     public Feedback() {
-        this.createdAt = LocalDateTime.now();
-    }
-
-    public Feedback(Resident resident, Meal meal, Integer rating, String comment) {
-        this.resident = resident;
-        this.meal = meal;
-        this.rating = rating;
-        this.comment = comment;
         this.createdAt = LocalDateTime.now();
     }
 

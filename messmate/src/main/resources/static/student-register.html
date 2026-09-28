@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Registration - MessMate</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="auth-page">
+
+<nav class="navbar">
+    <div class="nav-container">
+
+        <a href="index.html" class="brand">
+            MessMate
+        </a>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="student-login.html">Student Login</a>
+        </div>
+
+    </div>
+</nav>
+
+<main class="auth-main">
+
+    <div class="auth-card register-card">
+
+        <div class="auth-icon">
+            🎓
+        </div>
+
+        <h1>Student Registration</h1>
+
+        <p class="auth-description">
+            Enter your details once. Your information will be stored
+            permanently in the MessMate database.
+        </p>
+
+        <form id="registerForm">
+
+            <label for="name">Full Name</label>
+
+            <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your full name"
+                    required
+            >
+
+            <label for="rollNumber">Register Number</label>
+
+            <input
+                    type="text"
+                    id="rollNumber"
+                    maxlength="7"
+                    placeholder="Example: 24CCE01"
+                    required
+            >
+
+            <div class="input-help">
+                Exactly 7 letters and numbers
+            </div>
+
+            <label for="department">Department</label>
+
+            <select id="department" required>
+
+                <option value="">Select Department</option>
+                <option value="CCE">CCE</option>
+                <option value="CSE">CSE</option>
+                <option value="ECE">ECE</option>
+                <option value="EEE">EEE</option>
+                <option value="AIDS">AIDS</option>
+                <option value="AIML">AIML</option>
+                <option value="MECH">MECH</option>
+                <option value="CIVIL">CIVIL</option>
+
+            </select>
+
+            <label for="phone">Phone Number</label>
+
+            <input
+                    type="tel"
+                    id="phone"
+                    maxlength="10"
+                    placeholder="10 digit phone number"
+                    required
+            >
+
+            <label for="block">Hostel Block</label>
+
+            <select id="block" required>
+
+                <option value="">Select Block</option>
+                <option value="A">Block A</option>
+                <option value="B">Block B</option>
+                <option value="C">Block C</option>
+                <option value="D">Block D</option>
+                <option value="E">Block E</option>
+                <option value="F">Block F</option>
+
+            </select>
+
+            <label for="roomNo">Room Number</label>
+
+            <input
+                    type="text"
+                    id="roomNo"
+                    placeholder="Example: C303"
+                    required
+            >
+
+            <label for="password">Password</label>
+
+            <input
+                    type="password"
+                    id="password"
+                    placeholder="Create your password"
+                    required
+            >
+
+            <button
+                    type="submit"
+                    class="auth-button">
+                Register
+            </button>
+
+        </form>
+
+        <div id="message"></div>
+
+        <div class="auth-footer">
+
+            Already registered?
+
+            <a href="student-login.html">
+                Login here
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+<script>
+
+    document
+        .getElementById("registerForm")
+        .addEventListener("submit", async function (event) {
+
+            event.preventDefault();
+
+            const name =
+                document.getElementById("name").value.trim();
+
+            const rollNumber =
+                document.getElementById("rollNumber")
+                    .value.trim();
+
+            const department =
+                document.getElementById("department").value;
+
+            const phone =
+                document.getElementById("phone")
+                    .value.trim();
+
+            const block =
+                document.getElementById("block").value;
+
+            const roomNo =
+                document.getElementById("roomNo")
+                    .value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            const message =
+                document.getElementById("message");
+
+            const rollPattern =
+                /^[A-Za-z0-9]{7}$/;
+
+            const phonePattern =
+                /^[0-9]{10}$/;
+
+            if (!rollPattern.test(rollNumber)) {
+
+                message.className = "error-message";
+
+                message.textContent =
+                    "Register number must contain exactly 7 letters and numbers.";
+
+                return;
+            }
+
+            if (!phonePattern.test(phone)) {
+
+                message.className = "error-message";
+
+                message.textContent =
+                    "Phone number must contain exactly 10 digits.";
+
+                return;
+            }
+
+            try {
+
+                const response = await fetch(
+                    "/api/auth/student/register",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            name: name,
+                            rollNumber: rollNumber,
+                            phone: phone,
+                            roomNo: roomNo,
+                            block: block,
+                            department: department,
+                            password: password
+
+                        })
+                    }
+                );
+
+                const result =
+                    await response.json();
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        "Registration failed."
+                    );
+                }
+
+                message.className =
+                    "success-message";
+
+                message.textContent =
+                    "Registration successful! Redirecting to login...";
+
+                document
+                    .getElementById("registerForm")
+                    .reset();
+
+                setTimeout(function () {
+
+                    window.location.href =
+                        "student-login.html";
+
+                }, 1500);
+
+            } catch (error) {
+
+                message.className =
+                    "error-message";
+
+                message.textContent =
+                    error.message;
+
+            }
+
+        });
+
+</script>
+
+</body>
+</html>

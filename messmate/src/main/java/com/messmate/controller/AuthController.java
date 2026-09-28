@@ -1,7 +1,8 @@
 package com.messmate.controller;
 
-import com.messmate.model.Resident;
+import com.messmate.dto.StudentResponse;
 import com.messmate.service.AuthService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.http.ResponseEntity;
@@ -18,25 +19,20 @@ public class AuthController {
     }
 
     @PostMapping("/student/login")
-    public ResponseEntity<Resident> login(
-            @RequestBody LoginRequest request) {
+    public ResponseEntity<StudentResponse> login(
+            @Valid @RequestBody LoginRequest request) {
 
-        Resident resident = authService.login(
+        StudentResponse student = authService.login(
                 request.rollNumber(),
                 request.password()
         );
 
-        return ResponseEntity.ok(resident);
+        return ResponseEntity.ok(student);
     }
 
     @GetMapping("/student/{rollNumber}")
-    public ResponseEntity<Resident> getStudent(
-            @PathVariable
-            @Pattern(
-                    regexp = "^[A-Za-z0-9]{7}$",
-                    message = "Roll number must contain exactly 7 letters and numbers"
-            )
-            String rollNumber) {
+    public ResponseEntity<StudentResponse> getStudent(
+            @PathVariable String rollNumber) {
 
         return ResponseEntity.ok(
                 authService.getStudent(rollNumber)

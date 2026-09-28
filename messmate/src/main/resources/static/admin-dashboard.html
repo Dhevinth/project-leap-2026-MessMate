@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Warden Dashboard - MessMate</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+<body class="dashboard-page">
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="admin-dashboard.html"
+           class="brand">
+            MessMate
+        </a>
+
+        <div class="nav-links">
+
+            <a href="residents.html">
+                Students
+            </a>
+
+            <a href="menu.html">
+                Menu
+            </a>
+
+            <a href="feedback.html">
+                Feedback
+            </a>
+
+            <a href="reports.html">
+                Reports
+            </a>
+
+            <a href="#" id="logoutBtn">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main>
+
+    <section class="dashboard-header">
+
+        <div>
+
+            <p class="small-title">
+                WARDEN PORTAL
+            </p>
+
+            <h1>
+                Welcome, <span id="adminName">Warden</span>
+            </h1>
+
+            <p>
+                Manage students, meals and feedback from one place.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="feature-grid">
+
+        <a href="residents.html"
+           class="feature-card">
+
+            <div class="feature-icon">
+                👨‍🎓
+            </div>
+
+            <h3>
+                Students
+            </h3>
+
+            <p>
+                View and manage registered students.
+            </p>
+
+        </a>
+
+
+        <a href="menu.html"
+           class="feature-card">
+
+            <div class="feature-icon">
+                🍽️
+            </div>
+
+            <h3>
+                Mess Menu
+            </h3>
+
+            <p>
+                View and manage the mess menu.
+            </p>
+
+        </a>
+
+
+        <a href="feedback.html"
+           class="feature-card">
+
+            <div class="feature-icon">
+                ⭐
+            </div>
+
+            <h3>
+                Feedback
+            </h3>
+
+            <p>
+                View student meal feedback.
+            </p>
+
+        </a>
+
+
+        <a href="reports.html"
+           class="feature-card">
+
+            <div class="feature-icon">
+                📊
+            </div>
+
+            <h3>
+                Reports
+            </h3>
+
+            <p>
+                View meal ratings and reports.
+            </p>
+
+        </a>
+
+    </section>
+
+</main>
+
+
+<script>
+
+    const adminUsername =
+        localStorage.getItem("adminUsername");
+
+    const adminRole =
+        localStorage.getItem("adminRole");
+
+
+    if (!adminUsername || !adminRole) {
+
+        window.location.href =
+            "admin-login.html";
+
+    }
+
+
+    document.getElementById("adminName")
+        .textContent = adminUsername;
+
+
+    document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function (event) {
+
+            event.preventDefault();
+
+            localStorage.removeItem("adminId");
+            localStorage.removeItem("adminUsername");
+            localStorage.removeItem("adminRole");
+
+            window.location.href =
+                "admin-login.html";
+        });
+
+</script>
+
+</body>
+
+</html>

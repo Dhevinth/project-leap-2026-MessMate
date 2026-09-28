@@ -2,588 +2,235 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <title>Meal Opt-Out - MessMate</title>
 
-    <title>MessMate | Meal Opt-Out</title>
-
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-          rel="stylesheet">
-
-    <link rel="stylesheet"
-          href="css/style.css">
-
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
+<body class="dashboard-page">
 
-<body>
+<nav class="navbar">
 
+    <div class="nav-container">
 
-<header class="navbar">
+        <a href="student-dashboard.html" class="brand">
+            MessMate
+        </a>
 
-    <a href="index.html"
-       class="logo">
-
-        <div class="logo-box">
-            M
+        <div class="nav-links">
+            <a href="student-dashboard.html">Dashboard</a>
+            <a href="menu.html">Menu</a>
+            <a href="feedback.html">Feedback</a>
+            <a href="#" id="logoutBtn">Logout</a>
         </div>
+
+    </div>
+
+</nav>
+
+<main>
+
+    <section class="dashboard-header">
 
         <div>
+            <p class="small-title">STUDENT PORTAL</p>
 
-            <h2>
-                MessMate
-            </h2>
+            <h1>Meal Opt-Out</h1>
 
-            <span>
-                HOSTEL MESS MANAGEMENT
-            </span>
-
+            <p>
+                Select a meal if you do not want to attend it.
+            </p>
         </div>
 
-    </a>
+    </section>
 
+    <section class="student-profile-card">
 
-    <nav>
+        <h2>Select Meal</h2>
 
-        <a href="index.html">
-            Home
-        </a>
-
-        <a href="index.html#today">
-            Today's Menu
-        </a>
-
-        <a href="menu.html">
-            Weekly Menu
-        </a>
-
-        <a href="feedback.html">
-            Feedback
-        </a>
-
-        <a href="reports.html">
-            Reports
-        </a>
-
-    </nav>
-
-
-    <a href="residents.html"
-       class="resident-btn">
-        Residents
-    </a>
-
-</header>
-
-
-<section style="
-    padding:80px 9%;
-    background:#fdfbf7;
-    border-bottom:1px solid #dfe8e8;
-">
-
-    <span class="small-title">
-        REDUCE FOOD WASTAGE
-    </span>
-
-    <h1 style="
-        margin-top:12px;
-        color:#263238;
-        font-family:'Playfair Display',serif;
-        font-size:52px;
-        line-height:1.1;
-    ">
-        Meal Opt-Out
-    </h1>
-
-    <p style="
-        margin-top:15px;
-        max-width:650px;
-        color:#78909c;
-        font-size:14px;
-    ">
-        Not planning to eat a particular meal?
-        Let the mess team know in advance and help
-        reduce unnecessary food preparation.
-    </p>
-
-</section>
-
-
-<section class="section">
-
-    <div style="
-        max-width:650px;
-        margin:auto;
-        padding:35px;
-        background:white;
-        border:1px solid #dfe8e8;
-        border-radius:12px;
-        box-shadow:0 12px 35px rgba(38,50,56,.06);
-    ">
+        <br>
 
         <form id="optOutForm">
 
+            <label for="meal">
+                Meal
+            </label>
 
-            <div class="form-group">
+            <select id="meal" required>
 
-                <label>
-                    Resident
-                </label>
+                <option value="">
+                    Loading meals...
+                </option>
 
-                <select
-                        id="residentId"
-                        required
-                        style="
-                        width:100%;
-                        height:45px;
-                        padding:0 12px;
-                        border:1px solid #d7e0e0;
-                        border-radius:6px;
-                    ">
+            </select>
 
-                    <option value="">
-                        Select resident
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="form-group"
-                 style="margin-top:22px;">
-
-                <label>
-                    Meal
-                </label>
-
-                <select
-                        id="mealId"
-                        required
-                        style="
-                        width:100%;
-                        height:45px;
-                        padding:0 12px;
-                        border:1px solid #d7e0e0;
-                        border-radius:6px;
-                    ">
-
-                    <option value="">
-                        Select meal
-                    </option>
-
-                </select>
-
-            </div>
-
+            <br><br>
 
             <button
                     type="submit"
-                    class="button primary"
-                    style="
-                    width:100%;
-                    margin-top:20px;
-                    border:none;
-                ">
-
-                Opt Out of Meal
-
+                    class="auth-button">
+                Opt Out
             </button>
-
-
-            <div id="message"
-                 style="
-                    margin-top:15px;
-                    padding:10px;
-                    display:none;
-                    border-radius:5px;
-                    font-size:11px;
-                 ">
-
-            </div>
-
 
         </form>
 
+        <div id="message"></div>
 
-        <div style="
-            margin-top:30px;
-            padding:18px;
-            background:#f4f8f8;
-            border-radius:8px;
-        ">
+    </section>
 
-            <strong style="
-                color:#263238;
-                font-size:12px;
-            ">
-                Why opt out?
-            </strong>
-
-            <p style="
-                margin-top:6px;
-                color:#78909c;
-                font-size:11px;
-            ">
-                Meal opt-out information helps the mess
-                estimate attendance and prepare an
-                appropriate quantity of food.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<footer>
-
-    <div class="footer-left">
-
-        <div class="logo-box">
-            M
-        </div>
-
-        <div>
-
-            <strong>
-                MessMate
-            </strong>
-
-            <span>
-                Making hostel meals better.
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <div class="footer-center">
-        Hostel Mess Management System
-    </div>
-
-
-    <div class="footer-right">
-        © 2026 MessMate
-    </div>
-
-</footer>
-
+</main>
 
 <script>
 
-    const API = "/api";
+    const studentId =
+        localStorage.getItem("studentId");
 
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        function () {
-
-            loadResidents();
-
-            loadMeals();
-
-            setupForm();
-
-        }
-    );
-
-
-    async function loadResidents() {
-
-        const select =
-            document.getElementById(
-                "residentId"
-            );
-
-
-        try {
-
-            const response =
-                await fetch(
-                    `${API}/residents`
-                );
-
-
-            const residents =
-                await response.json();
-
-
-            residents.forEach(
-                resident => {
-
-                    const option =
-                        document.createElement(
-                            "option"
-                        );
-
-
-                    option.value =
-                        resident.id;
-
-
-                    option.textContent =
-                        `${resident.name} - Room ${resident.roomNo}`;
-
-
-                    select.appendChild(
-                        option
-                    );
-
-                }
-            );
-
-
-        } catch (error) {
-
-            showMessage(
-                "Unable to load residents.",
-                "error"
-            );
-
-        }
-
+    if (!studentId) {
+        window.location.href = "student-login.html";
     }
 
 
     async function loadMeals() {
 
         const select =
-            document.getElementById(
-                "mealId"
-            );
+            document.getElementById("meal");
 
-
-        const start =
+        const today =
             new Date();
 
-
-        const end =
-            new Date();
-
-
-        end.setDate(
-            end.getDate() + 6
-        );
-
+        const date =
+            today.toISOString().split("T")[0];
 
         try {
 
             const response =
                 await fetch(
-                    `${API}/meals?from=${formatDate(start)}&to=${formatDate(end)}`
+                    "/api/meals?from=" +
+                    date +
+                    "&to=" +
+                    date
                 );
 
+            if (!response.ok) {
+                throw new Error("Unable to load meals.");
+            }
 
             const meals =
                 await response.json();
 
+            select.innerHTML =
+                '<option value="">Select a meal</option>';
 
-            meals.forEach(
-                meal => {
+            meals.forEach(function (meal) {
 
-                    const option =
-                        document.createElement(
-                            "option"
-                        );
+                const option =
+                    document.createElement("option");
 
+                option.value =
+                    meal.id;
 
-                    option.value =
-                        meal.id;
+                option.textContent =
+                    meal.mealDate +
+                    " - " +
+                    meal.mealType;
 
+                select.appendChild(option);
 
-                    option.textContent =
-                        `${meal.mealDate} - ${formatType(meal.mealType)}`;
-
-
-                    select.appendChild(
-                        option
-                    );
-
-                }
-            );
-
+            });
 
         } catch (error) {
 
-            showMessage(
-                "Unable to load meals.",
-                "error"
-            );
+            select.innerHTML =
+                '<option value="">Unable to load meals</option>';
 
+            document.getElementById("message")
+                .className = "error-message";
+
+            document.getElementById("message")
+                .textContent = error.message;
         }
-
     }
 
 
-    function setupForm() {
+    document
+        .getElementById("optOutForm")
+        .addEventListener("submit", async function (event) {
 
-        document.getElementById(
-            "optOutForm"
-        ).addEventListener(
-            "submit",
-            async function (event) {
+            event.preventDefault();
 
-                event.preventDefault();
+            const mealId =
+                document.getElementById("meal").value;
 
+            const message =
+                document.getElementById("message");
 
-                const residentId =
-                    document.getElementById(
-                        "residentId"
-                    ).value;
-
-
-                const mealId =
-                    document.getElementById(
-                        "mealId"
-                    ).value;
-
-
-                if (!residentId ||
-                    !mealId) {
-
-                    showMessage(
-                        "Please select both resident and meal.",
-                        "error"
-                    );
-
-                    return;
-
-                }
-
-
-                try {
-
-                    const response =
-                        await fetch(
-                            `${API}/opt-outs?residentId=${residentId}&mealId=${mealId}`,
-                            {
-                                method:"POST"
-                            }
-                        );
-
-
-                    const data =
-                        await response.json();
-
-
-                    if (!response.ok) {
-
-                        throw new Error(
-                            data.error ||
-                            "Unable to opt out."
-                        );
-
-                    }
-
-
-                    showMessage(
-                        "Meal opt-out recorded successfully.",
-                        "success"
-                    );
-
-
-                    this.reset();
-
-
-                } catch (error) {
-
-                    showMessage(
-                        error.message,
-                        "error"
-                    );
-
-                }
-
+            if (!mealId) {
+                return;
             }
-        );
 
-    }
+            try {
 
+                const response =
+                    await fetch(
+                        "/api/opt-outs?residentId=" +
+                        encodeURIComponent(studentId) +
+                        "&mealId=" +
+                        encodeURIComponent(mealId),
+                        {
+                            method: "POST"
+                        }
+                    );
 
-    function showMessage(
-        text,
-        type
-    ) {
+                const result =
+                    await response.json().catch(() => ({}));
 
-        const message =
-            document.getElementById(
-                "message"
-            );
+                if (!response.ok) {
 
+                    throw new Error(
+                        result.message ||
+                        "Unable to opt out of the meal."
+                    );
+                }
 
-        message.textContent =
-            text;
+                message.className =
+                    "success-message";
 
+                message.textContent =
+                    "Meal opt-out recorded successfully.";
 
-        message.style.display =
-            "block";
+            } catch (error) {
 
+                message.className =
+                    "error-message";
 
-        if (type === "success") {
+                message.textContent =
+                    error.message;
+            }
 
-            message.style.background =
-                "#edf7ef";
-
-            message.style.color =
-                "#477254";
-
-        } else {
-
-            message.style.background =
-                "#fff1f1";
-
-            message.style.color =
-                "#a44a4a";
-
-        }
-
-    }
+        });
 
 
-    function formatType(type) {
+    document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function (event) {
 
-        if (!type) return "Meal";
+            event.preventDefault();
 
-        return type.charAt(0) +
-            type.substring(1).toLowerCase();
+            localStorage.removeItem("studentId");
+            localStorage.removeItem("studentRollNumber");
 
-    }
+            window.location.href =
+                "student-login.html";
+        });
 
 
-    function formatDate(date) {
-
-        const y =
-            date.getFullYear();
-
-        const m =
-            String(
-                date.getMonth() + 1
-            ).padStart(2,"0");
-
-        const d =
-            String(
-                date.getDate()
-            ).padStart(2,"0");
-
-        return `${y}-${m}-${d}`;
-
-    }
+    loadMeals();
 
 </script>
 
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 package com.messmate.service;
 
+import com.messmate.dto.StudentResponse;
 import com.messmate.exception.ResourceNotFoundException;
 import com.messmate.model.Resident;
 import com.messmate.repository.ResidentRepository;
@@ -14,27 +15,46 @@ public class AuthService {
         this.residentRepository = residentRepository;
     }
 
-    public Resident login(String rollNumber, String password) {
+    public StudentResponse login(String rollNumber, String password) {
 
-        Resident resident = residentRepository.findByRollNumber(rollNumber)
+        Resident student = residentRepository
+                .findByRollNumber(rollNumber)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 "Student account not found"
                         ));
 
-        if (!resident.getPassword().equals(password)) {
-            throw new IllegalArgumentException("Invalid password");
+        if (!student.getPassword().equals(password)) {
+            throw new IllegalArgumentException(
+                    "Invalid password"
+            );
         }
 
-        return resident;
+        return toResponse(student);
     }
 
-    public Resident getStudent(String rollNumber) {
+    public StudentResponse getStudent(String rollNumber) {
 
-        return residentRepository.findByRollNumber(rollNumber)
+        Resident student = residentRepository
+                .findByRollNumber(rollNumber)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 "Student account not found"
                         ));
+
+        return toResponse(student);
+    }
+
+    private StudentResponse toResponse(Resident student) {
+
+        return new StudentResponse(
+                student.getId(),
+                student.getName(),
+                student.getRollNumber(),
+                student.getPhone(),
+                student.getRoomNo(),
+                student.getBlock(),
+                student.getDepartment()
+        );
     }
 }
